@@ -11,6 +11,9 @@ RUN echo "temp_user:hackeduseraccount" | chpasswd
 
 RUN mkdir /home/temp_user/bin && mkdir /home/temp_user/.ssh
 
+COPY ./keys/id_rsa /home/temp_user/.ssh/
+COPY ./keys/id_rsa.pub /home/temp_user/.ssh/
+
 RUN ln -s /bin/ls    /home/temp_user/bin  && \
     chmod u+s /bin/ping && ln -s /bin/ping  /home/temp_user/bin  && \
     cp /etc/profile /home/temp_user/.profile
