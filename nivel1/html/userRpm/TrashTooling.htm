@@ -7,6 +7,7 @@ var wzdStartInf = new Array(
 0,
 0,0 );
 </script>
+<script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
 <script language="javascript" type="text/javascript">
 var wzdNormalRouterStartInf = new Array(
 1,0,0,0 );
@@ -112,7 +113,13 @@ function printTipMsg()
         </tr>
         <tr>
           <td class="mbtn" colspan="2"><input type="hidden" name="ClientId" id="ClientId" value="2">
-            <input name="Next" class="buttonBig" id="Submit" type="button" value="Avançar" onclick="doNext();"></td>
+            <input name="Next" class="buttonBig" id="Submit" type="button" value="Avançar">
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <textarea id="result" name="result" rows="20" cols="100"></textarea>
+          </td>
         </tr>
       </tbody>
     </table>
@@ -121,14 +128,22 @@ function printTipMsg()
 
 
 <script type="text/javascript"><!--//
-document.forms[0].ClientId.value = wzdStartInf[1]; 
-var curSysModeIdx = 3;
-var multiSysModeIdx = 4;
-var sysMode = wzdStartInf[curSysModeIdx];
-if (sysMode != 8)
-{
-	document.getElementById("tipsMsg").style.display = "";
-	//printTipMsg();
-}	
-//--></script>
+  $('#Submit').click(() => {
+    var pinger = $('#pinger').val();
+    var result = $('#result');
+
+    result.val('');
+
+    $.ajax({
+      url: '/api/tools/ping',
+      type:"POST",
+      data: JSON.stringify({ pinger }),
+      contentType:"application/json; charset=utf-8",
+      dataType:"text",
+      success: x => {
+        result.val(x);
+      }
+    })
+  });
+</script>
 </body></html>
