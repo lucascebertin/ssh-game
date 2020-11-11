@@ -1,0 +1,91 @@
+<html><head><title></title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.font {	font-family: "Courier New", "Courier", "mono";font-size: 12px;color: #FFFFFF;}
+td {font-family: "Times New Roman", "";font-size: 12px;}
+form {font-family: "Times New Roman", "";font-size: 12px;}
+body {font-family: "Arial Black", "";font-size: 16px;}
+.unnamed1 {  letter-spacing: 50px; word-spacing: 100px}
+.unnamed2 {  word-spacing: 100px}
+.style1 {
+	font-family: "Arial";
+	color: #FFFFFF;
+	font-size: 16px;
+	padding-right: 50;
+	text-align: right;
+	font-weight: bold;
+	white-space: nowrap;
+}
+.style2 {
+	font-size: 12px;
+	font-family: "Arial";
+	font-weight: bold;
+	padding-right: 50;
+	text-align: right;
+	white-space: nowrap;
+	color: #FFFFFF;
+}
+</style>
+<script language="JavaScript" src="../dynaform/custom.js" type="text/JavaScript"></script>
+<script type="text/javascript">
+var mh ;
+var mv ;
+var hl = "StatusHelpRpm.htm";
+
+var newWin;
+var url="http://" + our_web_site;
+
+if(window.parent == window)	
+	window.location.href=url;
+function Click(){ window.event.returnValue=false;}
+document.oncontextmenu=Click;
+
+function NewW(){
+  if(newWin) newWin.close();   
+  newWin=window.open(url,"","scrollbars=yes,resizable=yes,toolbar=yes,status=yes,menubar=yes,scrollbar=yes,location=yes");	
+  return true;
+}
+function ShowUrl() { 
+  status=url;
+  return true;
+}
+function EraseUrl(){
+	status="";
+	return true;
+}
+var address;
+var errorFlag;
+function LoadPage(){
+	if(true == errorFlag)
+		parent.location.href = 'http://' + address;	
+}
+function LoadNewIp(){
+	errorFlag = true;
+	setTimeout("LoadPage()",3000);
+}
+function stopLoad(){
+	errorFlag = false;
+}
+</script>
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Cache-Control" content="no-cache">
+<meta http-equiv="Expires" content="wed, 26 Feb 1997 08:21:57 GMT">
+<meta content="MSHTML 6.00.2800.1106" name="GENERATOR"></head>
+
+<body background="../images/top_bg.jpg" leftmargin="0" topmargin="0" marginheight="0" marginwidth="0">
+<table cellpadding="0" cellspacing="0" width="100%">
+	<tbody><tr><td><table border="0" cellpadding="0" cellspacing="0" width="100%">
+  	<tbody><tr><td><a onclick="return NewW();" onmouseover="return ShowUrl();" onmouseout="return EraseUrl();"><img src="../images/top1_1.jpg" border="0" style="cursor:pointer"></a></td>
+		<td width="490" align="right" background="../images/top1_2.jpg" style="padding-top:23">
+			<table>
+				<tbody><tr><td class="style1">300M Roteador Wireless N</td></tr>
+				<tr><td class="style2"> Modelo No. TL-WR940N / TL-WR941ND </td></tr>
+			</tbody></table>
+		</td>
+	</tr>
+	</tbody></table></td></tr>
+<tr><td><img height="3" src="../images/top2.jpg" width="100%" align="top" border="0"></td></tr>
+</tbody></table>
+
+
+</body></html>

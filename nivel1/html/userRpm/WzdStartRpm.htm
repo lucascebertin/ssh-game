@@ -1,0 +1,138 @@
+<html><head><script language="javascript" type="text/javascript">
+var wzdStartInf = new Array(
+1,
+2,
+0,
+1,
+0,
+0,0 );
+</script>
+<script language="javascript" type="text/javascript">
+var wzdNormalRouterStartInf = new Array(
+1,0,0,0 );
+</script>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<title>TL-WR940N/TL-WR941ND</title>
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="wed, 26 Feb 1997 08:21:57 GMT">
+<link href="../dynaform/css_main.css" rel="stylesheet" type="text/css">
+<script language="javascript" src="../dynaform/common.js" type="text/javascript"></script>
+<script language="javascript" type="text/javascript"><!--
+//--></script>
+
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<script type="text/javascript"><!--//
+function doNext()
+{
+	goUrl("../userRpm/wzdWanTypeRpm.htm");
+}
+
+function doExit()
+{
+	if (window.parent == window)
+	{
+		window.close();
+	}
+	else
+	{
+		parent.bottomLeftFrame.collapseAll();
+		if(wzdStartInf[curSysModeIdx] == 8 || wzdNormalRouterStartInf[0] == 1)//systemMode ap
+			parent.bottomLeftFrame.location.href = "../userRpm/MenuRpm.htm?&WzdStepOnly=0";
+		parent.mainFrame.location.href = "../userRpm/StatusRpm.htm";
+	}
+}
+
+function printTipMsg()
+{
+	var tipMsg = "";
+	var sysMode = wzdStartInf[curSysModeIdx];
+	if (wzdStartInf[multiSysModeIdx])
+	{
+		tipMsg += "<span class=\"STYLE2\"><span id=\"t_start\" name=\"t_start\">Start</span></span><B>&nbsp;&gt;&gt;&nbsp;<span id=\"t_workingmode\" name=\"t_workingmode\">Working Mode</span></B>";
+	}
+	else
+	{
+		tipMsg += "<span class=\"STYLE2\"><span id=\"t_start\" name=\"t_start\">Start</span></span>";
+	}
+	if (sysMode == 1 || sysMode == 4)
+	{
+		tipMsg += "<B>&nbsp;&gt;&gt;&nbsp;<span id=\"t_wantype\" name=\"t_wantype\">WAN Connection Type</span>&nbsp;&gt;&gt;&nbsp;<span id=\"t_wireless\" name=\"t_wireless\">Wireless</span>&nbsp;&gt;&gt;&nbsp;<span id=\"t_finish\" name=\"t_finish\">Finish</span></B>";
+	}
+	else if (sysMode == 2)
+	{
+		tipMsg += "<B>&nbsp;&gt;&gt;&nbsp;<span id=\"t_interacce\" name=\"t_interacce\">Internet Access</span>&nbsp;&gt;&gt;&nbsp;<span id=\"t_wan3g\" name=\"t_wan3g\">WAN/3G/4G</span>&nbsp;&gt;&gt;&nbsp;<span id=\"t_wireless\" name=\"t_wireless\">Wireless</span>&nbsp;&gt;&gt;&nbsp;<span id=\"t_finish\" name=\"t_finish\">Finish</span></B>";
+	}
+	else if (sysMode == 8)
+	{
+		tipMsg += "<B>&nbsp;&gt;&gt;&nbsp;Wireless operMode&nbsp;&gt;&gt;&nbsp;Wireless&nbsp;&gt;&gt;&nbsp;<span id=\"t_finish\" name=\"t_finish\">Finish</span></B>";
+	}
+	else if (sysMode == 16)
+	{
+		tipMsg += "<B>&nbsp;&gt;&gt;&nbsp;<span id=\"t_3g\" name=\"t_3g\">3G/4G</span>&nbsp;&gt;&gt;&nbsp;Wireless&nbsp;&gt;&gt;&nbsp;<span id=\"t_finish\" name=\"t_finish\">Finish</span></B>";
+	}
+	document.getElementById("tips_msg").innerHTML = tipMsg;
+}
+//--></script>
+
+<style type="text/css">
+<!--
+.STYLE1 {color: #66CC33}
+.STYLE2 {color: #66CC00}
+-->
+</style>
+</head>
+<body onload="setTagStr(document,'ntw_wzd_start');LoadHelp('WzdStartHelpRpm.htm');resize(this);" onresize="resize(this);" marginwidth="0" marginheight="0">
+<center>
+  <form action="WzdStartRpm.htm" method="get" enctype="multipart/form-data">
+    <table id="autoWidth" name="autoWidth" style="width: 100%;">
+      <tbody>
+        <tr>
+          <td width="466" colspan="2" class="h1" id="t_title">Passo a passo</td>
+        </tr>
+        <tr>
+          <td class="blue" colspan="2"></td>
+        </tr>
+		
+		<tr id="tipsMsg" style="" name="tipsMsg">
+			<td class="info" colspan="2">
+			<span id="tips_msg" name="tips_msg"></span>
+			</td>
+		</tr>
+        <tr>
+			<td class="info" colspan="2" id="t_guide" name="t_guide">Execute a Configuração Rápida para configurar manualmente sua conexão de internet e configurações wireless.</td>
+        </tr>
+        <tr>
+			<td class="info" colspan="2"><span id="t_to_continue">Para continuar, por favor clique no botão</span> <b><span id="t_next">Avançar</span></b> <span id="t_button">.</span></td>
+        </tr>
+        <tr>
+			<td class="info" colspan="2"><span id="t_to_exit">Para sair, por favor clique no botão</span> <b><span id="t_exit">Sair</span></b> <span id="t_button_nbsp">.</span></td>
+        </tr>
+        <tr>
+          <td class="blue" colspan="2"></td>
+        </tr>
+					
+        <tr>
+          <td class="mbtn" colspan="2"><input type="hidden" name="ClientId" id="ClientId" value="2">
+            <input name="Exit" class="buttonBig" id="Submit" type="button" value="Sair" onclick="doExit();">
+            &nbsp; &nbsp;&nbsp;&nbsp;
+            <input name="Next" class="buttonBig" id="Submit" type="button" value="Avançar" onclick="doNext();"></td>
+        </tr>
+      </tbody>
+    </table>
+  </form>
+</center>
+
+
+<script type="text/javascript"><!--//
+document.forms[0].ClientId.value = wzdStartInf[1]; 
+var curSysModeIdx = 3;
+var multiSysModeIdx = 4;
+var sysMode = wzdStartInf[curSysModeIdx];
+if (sysMode != 8)
+{
+	document.getElementById("tipsMsg").style.display = "";
+	//printTipMsg();
+}	
+//--></script>
+</body></html>
