@@ -18,4 +18,12 @@ RUN ln -s /bin/ls    /home/temp_user/bin  && \
 RUN chown root. /home/temp_user/.profile && \
     chmod 755   /home/temp_user/.profile
 
-ENTRYPOINT /bin/sh
+WORKDIR /app
+
+COPY ./package.json ./package-lock.json ./tsconfig.json ./
+RUN npm install
+
+COPY . .
+RUN npm run build
+
+ENTRYPOINT [ "npm", "run", "start" ]
