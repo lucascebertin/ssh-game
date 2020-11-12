@@ -38,8 +38,8 @@ docker-compose -f docker-compose.windows.yml up
 ```
 
 Os desafios estarão dispoíveis conforme descrito abaixo:
-* [nivel 1](http://localhost:4444)
-* [nivel 2](tcp://localhost:2222)
+* nivel 1 - [http://localhost:4444](http://localhost:4444)
+* nivel 2 - tcp://localhost:2222
 
 
 ## Informações complementares
