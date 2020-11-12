@@ -1,40 +1,84 @@
+import fs from 'fs'
+import crypto from 'crypto'
+import { inspect } from 'util'
 import Docker, {Container} from 'dockerode'
-import ssh2 from 'ssh2'
-import NodeRSA from 'node-rsa'
+import ssh2, { utils } from 'ssh2'
+import { ParsedKey } from 'ssh2-streams'
 
 const docker = new Docker()
-
-const key = new NodeRSA({b: 1024})
-const privKey = key.exportKey('pkcs1-private-pem')
-
 const TIMEOUT = 100000
+ 
+const allowedUser = Buffer.from('foo')
+const allowedPassword = Buffer.from('bar')
+const allowedPubKey  = utils.parseKey(fs.readFileSync('keys/id_rsa.pub')) as ParsedKey
 
 new ssh2.Server({
-  hostKeys: [ privKey ],
-  banner: "Welcome!",
-  ident: "ssh-sandboxes",
-}, (client) => {
-  console.log("Client connected!")
-    
-  client.on('authentication', (ctx) => {
-    // Blindly accept all connections. Only one per IP address allowed, though.
-    ctx.accept()        
-  }).on('ready', () => {
+  hostKeys: [fs.readFileSync('keys/id_rsa')]
+}, function(client) {
+  console.log('Client connected!')
+ 
+  client.on('authentication', function(ctx) {
+    const user = Buffer.from(ctx.username)
+    if (user.length !== allowedUser.length
+        || !crypto.timingSafeEqual(user, allowedUser)) {
+      return ctx.reject()
+    }
+ 
+    switch (ctx.method) {
+      case 'password':
+        const password = Buffer.from(ctx.password)
+        if (password.length !== allowedPassword.length
+            || !crypto.timingSafeEqual(password, allowedPassword)) {
+          return ctx.reject()
+        }
+        break
+      case 'publickey':
+        if (allowedPubKey === null || allowedPubKey.getPublicSSH() === null)
+          return ctx.reject()
+
+        const allowedPubSSHKey = allowedPubKey.getPublicSSH()
+        if (ctx.key.algo !== allowedPubKey.type
+            || ctx.key.data.length !== allowedPubSSHKey.length
+            || !crypto.timingSafeEqual(ctx.key.data, Buffer.from(allowedPubSSHKey))
+            || (ctx.signature && allowedPubKey.verify(ctx.blob, ctx.signature) !== true)) {
+          return ctx.reject()
+        }
+        break
+      default:
+        return ctx.reject()
+    }
+ 
+    ctx.accept()
+  }).on('ready', function() {
     console.log('Client authenticated!')
-    client.on('session', function(accept) {
-      console.log('Client wants new session')
-      var session = accept()
-      session.once('pty', (accept) => {
+ 
+    client.on('session', function(accept, reject) {
+      const session = accept()
+      session.once('exec', function(accept, reject, info) {
+        console.log('Client wants to execute: ' + inspect(info.command))
+        const stream = accept()
+        stream.stderr.write('Oh no, the dreaded errors!\n')
+        stream.write('Just kidding about the errors!\n')
+        stream.exit(0)
+        stream.end()
+      })
+
+      session.on('pty', function(accept, reject, info) {
+        if(!accept)
+          return
+
         accept()
       })
+
+      
       session.once('shell', (accept) => {
         console.log('Client wants a shell!')
-        let container: Container | undefined
+        let container : Container
 
         // Accept the connection and get a bidirectional stream.
         const stream = accept()
 
-        var cleanupStream = function() {
+        const cleanupStream = function() {
           if (stream.timeoutId) {
             clearTimeout(stream.timeoutId)
           }
@@ -60,6 +104,9 @@ new ssh2.Server({
             return
           }
 
+          if(!newContainer)
+            return
+
           container = newContainer
 
           if(!container)
@@ -73,10 +120,10 @@ new ssh2.Server({
 
             console.log("Attached to container " + newContainer.id)
 
-            ttyStream.pipe(stream);
+            ttyStream.pipe(stream)
 
             // Attach client stream to stdin of container
-            stream.pipe(ttyStream);
+            stream.pipe(ttyStream)
 
             // Start the container
             newContainer.start((err) => {
@@ -107,14 +154,13 @@ new ssh2.Server({
           cleanupStream()
         })
       })
-    })
-  }).on('abort', () => {
-    console.log('Client aborted!')
-  }).on('end', () => {
-    console.log('Client disconnected!')
-  })
 
-}).listen(2222, '127.0.0.1', () => {
+
+
+    })
+  }).on('end', function() {
+    console.log('Client disconnected')
+  })
+}).listen(2222, '0.0.0.0', function() {
   console.log('Listening on port 2222')
 })
-

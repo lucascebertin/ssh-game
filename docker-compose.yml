@@ -1,0 +1,22 @@
+version: '3.2'
+
+services:
+  nivel1:
+    build:
+      context: ./nivel1
+      dockerfile: Dockerfile
+    image: l3ctf/nivel1:dev
+    ports:
+      - '4444:4444'
+
+  nivel2:
+      build:
+        context: ./nivel2
+        dockerfile: Dockerfile
+      image: l3ctd/nivel2:dev
+      ports:
+        - '2222:2222'
+      volumes:
+        - '/var/run/docker.sock:/var/run/docker.sock'
+
+

@@ -128,3 +128,7 @@ dist
 .vscode-test
 
 # End of https://www.toptal.com/developers/gitignore/api/node,git
+
+
+# Arquivos de build do typescript
+**/build/
