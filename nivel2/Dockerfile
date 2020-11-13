@@ -5,7 +5,7 @@ ENV DOWNLOAD_URL="https://download.docker.com/linux/static/stable/x86_64/docker-
 
 RUN apk update && \
     apk upgrade && \
-    apk add bash bind-tools curl libcap net-tools openssl && \ 
+    apk add bash bind-tools curl libcap net-tools openssl tar && \ 
     apk add nodejs && \
     ln -s /bin/bash /bin/rbash && \
     mkdir -p /tmp/download \
