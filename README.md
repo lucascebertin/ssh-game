@@ -32,6 +32,8 @@ O arquivo log.sh pode ser descoberto através de um cat em /etc/crontab
     O desafio 2 considera que existe Docker localmente para que possa iniciar sessões com experiência de SSH mas conectando-se ao tty e stdin dos containers executados.
   * Nodejs 12.x
   * SSH client
+  * AZ Cli
+  * Terraform (caso queira publicar a infra no Azure via AzureRM)
 
 ## Já instalei docker e docker-compose, o que faço agora?
 Depois de ter instalado o que era necessário, basta rodar:
@@ -49,7 +51,17 @@ docker-compose -f docker-compose.windows.yml up
 Os desafios estarão dispoíveis conforme descrito abaixo:
 * nivel 1 - [http://localhost:4444](http://localhost:4444)
 * nivel 2 - tcp://localhost:2222
+* nivel 3 - usa a mesma conexão do nível 2
 
+## Publicando no Azure
+Após instalar `AZ Cli` e `terraform` de acordo com as recomendações para o seu sistema operacional, é necessário iniciar algumas etapas:
+1. `az login` (para logar em sua conta, basta seguir o passo a passo ao abrir o navegador)
+2. `az account show` (para verificar se está utilizando a subscription correta, para trocar veja este [link](https://docs.microsoft.com/en-us/cli/azure/account?view=azure-cli-latest#az_account_set))
+3. Na pasta do terraform, `terraform init` (para baixar o provider do Azure, azurerm)
+4. `terraform apply` (para que o terraform conecte no azure e crie o plano de provisionamento)
+5. Se estiver de acordo com o plano e a subscription usada, responda com `yes` ao prompt do `terraform`
+6. Infelizmente, não consegui entender a forma de pegar o Public IP via `output`, para isso, conecte no portal azure e, dentro do resource da VM, veja a propriedade `Public IP address`
+7. Ainda não pensei na forma de publicar o jogo todo lá dentro, apenas provisionar recursos ... isto é WIP
 
 ## Informações complementares
 Para rodar estes desafios, será necessário ter ngrok instalado e, após isto, remapear, no `docker-compose.yml`, portas de nível root (80 e 22).
