@@ -124,6 +124,7 @@ const start = () => {
               console.log("Attached to container " + newContainer.id)
 
               stream.write('L3CTF{y34h_y34h_g0t_th3_k3ys_n0t_th3_ch33s3_th3_k3ys}\n\n\n\r')
+              stream.write('Agora, existe uma flag em /root/flag, boa sorte!\n\n\n\r')
               ttyStream.pipe(stream)
 
               // Attach client stream to stdin of container

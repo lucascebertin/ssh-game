@@ -23,6 +23,8 @@ RUN ln -s /bin/ls    /home/temp_user/bin  && \
 RUN chown root. /home/temp_user/.profile && \
     chmod 755   /home/temp_user/.profile
 
+RUN echo "L3CTF{4r3_y0u_t3ll1ng_m3_y0u_h4ck3d_4_t1m3_m4ch1n3}" > /root/flag.txt
+
 USER temp_user
 
 ENTRYPOINT /bin/sh
