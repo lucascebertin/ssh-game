@@ -16,7 +16,10 @@ const start = () => {
   const allowedPubKey  = utils.parseKey(pubKeyFile) as ParsedKey
 
   new ssh2.Server({
-    hostKeys: [fs.readFileSync('keys/id_rsa')]
+    hostKeys: [fs.readFileSync('keys/id_rsa')],
+    algorithms: {
+      serverHostKey: [ 'ssh-rsa', 'ssh-dss' ],
+    },
   }, function(client) {
     console.log('Client connected!')
    
@@ -165,7 +168,11 @@ const start = () => {
       })
     }).on('end', function() {
       console.log('Client disconnected')
+    }).on('error', error => {
+      console.error(error)
+      console.error('Are we being scanned?!?!')
     })
+
   }).listen(22222, '0.0.0.0', function() {
     console.log('Listening on port 22222')
   })

@@ -10,19 +10,19 @@ services:
       - '4444:4444'
 
   nivel2:
-      build:
-        context: ./nivel2
-        dockerfile: Dockerfile
-      image: l3ctf/nivel2:dev
-      ports:
-        - '2222:2222'
-      volumes:
-        - '/var/run/docker.sock:/var/run/docker.sock'
+    build:
+      context: ./nivel2
+      dockerfile: Dockerfile
+    image: l3ctf/nivel2:dev
+    ports:
+      - '2222:22222'
+    volumes:
+      - '/var/run/docker.sock:/var/run/docker.sock'
 
   nivel3:
-      build:
-        context: ./nivel3
-        dockerfile: Dockerfile
-      image: l3ctf/nivel3:dev
+    build:
+      context: ./nivel3
+      dockerfile: Dockerfile
+    image: l3ctf/nivel3:dev
 
 
