@@ -59,9 +59,24 @@ Após instalar `AZ Cli` e `terraform` de acordo com as recomendações para o se
 2. `az account show` (para verificar se está utilizando a subscription correta, para trocar veja este [link](https://docs.microsoft.com/en-us/cli/azure/account?view=azure-cli-latest#az_account_set))
 3. Na pasta do terraform, `terraform init` (para baixar o provider do Azure, azurerm)
 4. `terraform apply` (para que o terraform conecte no azure e crie o plano de provisionamento)
-5. Se estiver de acordo com o plano e a subscription usada, responda com `yes` ao prompt do `terraform`
-6. Infelizmente, não consegui entender a forma de pegar o Public IP via `output`, para isso, conecte no portal azure e, dentro do resource da VM, veja a propriedade `Public IP address`
-7. Ainda não pensei na forma de publicar o jogo todo lá dentro, apenas provisionar recursos ... isto é WIP
+5. Existem duas variáveis para orientar o terraform a provisionar o ambiente na região correta da Azure e com o prefixo adequado, por padrão, tenho utilizado `var.location=brazilsouth` e `var.prefix=ssh-game` mas não são valores obrigatórios, sinta-se livre para mudar
+6. Se estiver de acordo com o plano e a subscription usada, responda com `yes` ao prompt do `terraform`
+7. Ao finalizar o provisionamento, o Public IP via `output`, do terraform, será exibido no terminal
+8. Por enquanto, a publicação está sendo feita através de um simples git clone do meu repositório, ainda privado.
+9. Quando este repositório virar público, não será mais necessário utilizar SSH para dar clone, serão removidas sessões de upload de chave SSH privada e alterado o clone para HTTPS
+
+TLDR para o terraform (ainda precisa de login no `AZ Cli` 
+```bash
+terraform apply -auto-approve -var='location=brazilsouth' -var='prefix=ssh-game'
+```
+Leva em torno de 5 minutos para todos os recursos estarem provisionados e disponíveis ao uso.
+
+## Não quero mais cobrança, quero destruir tudo isso ai lá na Azure 
+```bash
+terraform destroy -auto-approve -var='location=brazilsouth' -var='prefix=ssh-game'
+```
+Leva em torno de 5 minutos para destruir todos os recursos.
+
 
 ## Informações complementares
 Para rodar estes desafios, será necessário ter ngrok instalado e, após isto, remapear, no `docker-compose.yml`, portas de nível root (80 e 22).
