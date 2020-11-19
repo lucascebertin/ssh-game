@@ -8,8 +8,8 @@ import { ParsedKey } from 'ssh2-streams'
 const docker = new Docker()
 const TIMEOUT = 100000
  
-const allowedUser = Buffer.from('foo')
-const allowedPassword = Buffer.from('bar')
+const allowedUser = Buffer.from('temp_user')
+const allowedPassword = Buffer.from('isitthatsohard')
 
 const start = () => {
   const pubKeyFile = fs.readFileSync('keys/id_rsa.pub')
