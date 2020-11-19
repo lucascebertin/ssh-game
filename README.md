@@ -11,7 +11,7 @@ Terá uma flag no arquivo id_rsa, o mais importante para este momento.
 Este nível, é quase uma extensão, em termos de dificuldade, do nível 1.
 A pessoa que obtiver as chaves, deverá trazê-las para sua máquina, modificar o nível de permissionamento deste (caso exista, se tratando de windows, isso não faz a menor diferença) e, depois, utilizar para conectar-se via SSH ao pseudo-roteador.
 Após os passos descritos acima, é necessário montar o ambiente necessário para conexão via SSH, se for Windows, basta utilizar o Putty, se Linux, já existirá o ssh client nativo.
-Ao obter a conexão, será exibido um BANNER de login (WIP), com algumas instruções e a próxima flag.
+Ao obter a conexão, será exibido um BANNER de login com algumas instruções e a próxima flag.
 
 ## nivel 3
 Este nível, é o mais difícil e aqui está como finalização, após este o comprometimento da máquina se dá por completo.
