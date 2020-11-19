@@ -166,8 +166,8 @@ const start = () => {
     }).on('end', function() {
       console.log('Client disconnected')
     })
-  }).listen(2222, '0.0.0.0', function() {
-    console.log('Listening on port 2222')
+  }).listen(22222, '0.0.0.0', function() {
+    console.log('Listening on port 22222')
   })
 }
 
