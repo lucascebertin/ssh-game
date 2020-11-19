@@ -70,12 +70,60 @@ resource "azurerm_linux_virtual_machine" "main" {
   }
 }
 
+# alocações dinâmicas de IP só acontecem após máquina ligada, então, não tem como colocar dentro do provisionamento da VM, falha logo que executa
+resource "null_resource" "main" {
+  provisioner "file" {
+    source      = "~/.ssh/id_rsa"
+    destination = "/home/adminuser/.ssh/id_rsa"
+
+    connection {
+      type        = "ssh"
+      user        = "adminuser"
+      private_key = file("~/.ssh/id_rsa")
+      host        = data.azurerm_public_ip.main.ip_address
+    }
+  }
+
+  provisioner "remote-exec" {
+    inline = [
+      "sudo apt-get update",
+      "sudo apt-get -y install apt-transport-https ca-certificates curl gnupg-agent software-properties-common",
+      "curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -",
+      "sudo add-apt-repository \"deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs)  stable\"",
+      "sudo apt-get update",
+      "sudo apt-get -y install docker-ce docker-ce-cli containerd.io",
+      "sudo groupadd docker",
+      "sudo usermod -aG docker $USER",
+      "sudo ssh-keygen -F github.com || sudo ssh-keyscan github.com >> ~/.ssh/known_hosts",
+      "sudo curl -L https://github.com/docker/compose/releases/download/1.18.0/docker-compose-`uname -s`-`uname -m` -o /usr/local/bin/docker-compose",
+      "sudo chmod +x /usr/local/bin/docker-compose",
+      "mkdir ~/app && cd ~/app", 
+      "chmod 400 ~/.ssh/id_rsa",
+      "GIT_SSH_COMMAND='ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no' git clone git@github.com:lucascebertin/ssh-game.git && cd ssh-game",
+      "sudo docker-compose build",
+      "sudo docker-compose up -d",
+      "sudo iptables -A INPUT -m state --state NEW -m tcp -p tcp --dport 2222 -j ACCEPT",
+      "sudo iptables -A INPUT -m state --state NEW -m tcp -p tcp --dport 22 -j ACCEPT",
+      "sudo iptables -A INPUT -m state --state NEW -m tcp -p tcp --dport 80 -j ACCEPT",
+      "sudo sed -i '/^Port/s/22/2222/' /etc/ssh/sshd_config",
+      "sudo service sshd restart"
+    ]
+
+    connection {
+      type        = "ssh"
+      user        = "adminuser"
+      private_key = file("~/.ssh/id_rsa")
+      host        = data.azurerm_public_ip.main.ip_address
+    }
+  }
+}
+
 data "azurerm_public_ip" "main" {
   name                = azurerm_public_ip.main.name
   resource_group_name = azurerm_resource_group.main.name
 
   depends_on = [
-    azurerm_resource_group.main
+    azurerm_linux_virtual_machine.main
   ]
 }
 
