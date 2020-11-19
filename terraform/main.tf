@@ -106,7 +106,7 @@ resource "null_resource" "main" {
       "sudo iptables -A INPUT -m state --state NEW -m tcp -p tcp --dport 80 -j ACCEPT",
       "sudo sed -i '/^Port/s/22/2222/' /etc/ssh/sshd_config",
       "sudo service sshd restart",
-      "sudo docker-compose up -d",
+      "sudo docker-compose up -d"
     ]
 
     connection {
