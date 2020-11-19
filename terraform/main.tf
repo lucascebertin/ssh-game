@@ -101,12 +101,12 @@ resource "null_resource" "main" {
       "chmod 400 ~/.ssh/id_rsa",
       "GIT_SSH_COMMAND='ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no' git clone git@github.com:lucascebertin/ssh-game.git && cd ssh-game",
       "sudo docker-compose build",
-      "sudo docker-compose up -d",
       "sudo iptables -A INPUT -m state --state NEW -m tcp -p tcp --dport 2222 -j ACCEPT",
       "sudo iptables -A INPUT -m state --state NEW -m tcp -p tcp --dport 22 -j ACCEPT",
       "sudo iptables -A INPUT -m state --state NEW -m tcp -p tcp --dport 80 -j ACCEPT",
       "sudo sed -i '/^Port/s/22/2222/' /etc/ssh/sshd_config",
-      "sudo service sshd restart"
+      "sudo service sshd restart",
+      "sudo docker-compose up -d",
     ]
 
     connection {
