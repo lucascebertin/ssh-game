@@ -19,14 +19,14 @@ services:
           memory: 128m
 
   nivel2:
-      build:
-        context: ./nivel2
-        dockerfile: Dockerfile
-      image: l3ctf/nivel2:dev
-      ports:
-        - '22:22222'
-      volumes:
-        - '/var/run/docker.sock:/var/run/docker.sock'
+    build:
+      context: ./nivel2
+      dockerfile: Dockerfile
+    image: l3ctf/nivel2:dev
+    ports:
+      - '22:22222'
+    volumes:
+      - '/var/run/docker.sock:/var/run/docker.sock'
 
     deploy:
       resources:
