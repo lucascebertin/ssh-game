@@ -95,7 +95,7 @@ resource "null_resource" "main" {
       "sudo groupadd docker",
       "sudo usermod -aG docker $USER",
       "sudo ssh-keygen -F github.com || sudo ssh-keyscan github.com >> ~/.ssh/known_hosts",
-      "sudo curl -L https://github.com/docker/compose/releases/download/1.18.0/docker-compose-`uname -s`-`uname -m` -o /usr/local/bin/docker-compose",
+      "sudo curl -L https://github.com/docker/compose/releases/download/1.27.4/docker-compose-`uname -s`-`uname -m` -o /usr/local/bin/docker-compose",
       "sudo chmod +x /usr/local/bin/docker-compose",
       "mkdir ~/app && cd ~/app", 
       "chmod 400 ~/.ssh/id_rsa",
