@@ -9,6 +9,15 @@ services:
     ports:
       - '4444:4444'
 
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 256M
+        reservations:
+          cpus: '0.2'
+          memory: 128M
+
   nivel2:
     build:
       context: ./nivel2
@@ -19,10 +28,28 @@ services:
     volumes:
       - '/var/run/docker.sock:/var/run/docker.sock'
 
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 256M
+        reservations:
+          cpus: '0.2'
+          memory: 128M
+
   nivel3:
     build:
       context: ./nivel3
       dockerfile: Dockerfile
     image: l3ctf/nivel3:dev
+
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 256M
+        reservations:
+          cpus: '0.2'
+          memory: 128M
 
 

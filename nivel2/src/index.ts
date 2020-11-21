@@ -103,6 +103,12 @@ const start = () => {
             Cmd: [ '/bin/sh' ],
             Image: 'l3ctf/nivel3:dev',
             OpenStdin: true,
+            HostConfig:{
+              KernelMemory: 8000000,
+              Memory: 256000000,
+              MemoryReservation: 128000000,
+              CpuQuota: 10000,
+            },
             Tty: true
             }, function (err, newContainer) {
             if (err) {

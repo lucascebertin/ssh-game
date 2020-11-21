@@ -7,7 +7,12 @@ export const post = (req: Request, res: Response) => {
       .status(400)
       .send('ping is empty')
 
-  const dominioOrIp = req.body.pinger
+  const dominioOrIp = req.body.pinger as string
+  const enviandoFuncao = dominioOrIp.includes('{')
+    || dominioOrIp.includes('}')
+
+  if(enviandoFuncao)
+    return res.send('domain not allowed...')
   //código extremamente inseguro, NUNCA USE ISSO EM UMA APLICAÇÃO REAL!
   const sh3ll = `cd /home/temp_user && su -c 'rbash -c "ping -c 2 ${dominioOrIp}"' temp_user`
 
