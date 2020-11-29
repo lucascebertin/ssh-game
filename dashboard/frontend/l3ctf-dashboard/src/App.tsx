@@ -1,12 +1,11 @@
 import React, { ReactElement } from 'react'
 import styled from 'styled-components'
 import Home from './template/Home'
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
+import Login from './template/Login'
 
 const AppContainer = styled.section`
   width: 100%;
-`
-
-const LoginContainer = styled.div`
   display: flex;
   justify-content: center;
 `
@@ -14,9 +13,16 @@ const LoginContainer = styled.div`
 const App = (): ReactElement => {
   return (
     <AppContainer>
-      <LoginContainer>
-        <Home />
-      </LoginContainer>
+      <Router>
+        <Switch>
+          <Route path="/login">
+            <Login />
+          </Route>
+          <Route path="/">
+            <Home />
+          </Route>
+        </Switch>
+      </Router>
     </AppContainer>
   )
 }

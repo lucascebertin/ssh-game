@@ -1,6 +1,6 @@
 import styled from 'styled-components/macro'
 
-const CadastrarButton = styled.button`
+const Button = styled.button`
   border: none;
   box-shadow: 0 0 0 1px ghostwhite;
   background-color: transparent;
@@ -20,4 +20,4 @@ const CadastrarButton = styled.button`
   }
 `
 
-export default CadastrarButton
+export default Button
