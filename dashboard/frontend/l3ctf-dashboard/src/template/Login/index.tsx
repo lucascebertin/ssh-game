@@ -27,7 +27,7 @@ const Login = (): ReactElement => {
               <Input type="text"></Input>
             </Label>
             <ActionsContainer>
-              <Button>Cadastrar</Button>
+              <Button to="/dashboard">Entrar</Button>
             </ActionsContainer>
           </LoginContainer>
         </SectionGradient>

@@ -27,7 +27,7 @@ const Cadastro = (): ReactElement => {
       <LoginSectionGradient>
         <LoginContainer>
           <ActionsContainer>
-            <Button>Entrar</Button>
+            <Button to="/dashboard">Entrar</Button>
           </ActionsContainer>
         </LoginContainer>
       </LoginSectionGradient>

@@ -28,7 +28,7 @@ const Cadastro = (): ReactElement => {
             </SignIn>
           </Label>
           <ActionsContainer>
-            <Button>Cadastrar</Button>
+            <Button to="/">Cadastrar</Button>
           </ActionsContainer>
         </LoginContainer>
       </SectionGradient>
