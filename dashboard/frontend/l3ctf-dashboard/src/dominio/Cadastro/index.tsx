@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react'
+import React, { ReactElement, useState } from 'react'
 import Button from '../../componentes/Button'
 import ActionsContainer from '../../componentes/Container/Action'
 import LoginContainer from '../../componentes/Container/Login'
@@ -15,22 +15,62 @@ const SignIn = styled.div`
   font-size: 0.8rem;
 `
 
+const Hash = styled.div`
+  background-color: ghostwhite;
+  padding: 0.5rem;
+  color: dimgray;
+  text-align: center;
+  margin: 1rem 0;
+`
+
+const Warning = styled.div`
+  color: khaki;
+`
+
+const ComponenteCadastro = ({ onCadastrado }): ReactElement => (
+  <LoginContainer>
+    <Label>
+      Cadastre seu time
+      <Input type="text"></Input>
+      <SignIn>
+        Já tem cadastro? <Link to="/login">faça o login</Link>
+      </SignIn>
+    </Label>
+    <ActionsContainer>
+      <Button to="/" onClick={() => onCadastrado(true)}>
+        Cadastrar
+      </Button>
+    </ActionsContainer>
+  </LoginContainer>
+)
+
+const ComponenteChaveDeAcesso = (): ReactElement => (
+  <LoginContainer>
+    <Label>
+      Chave de acesso gerada com sucesso, use-a para se logar:
+      <Hash>#09901283klsajsklALKjdks9239!@</Hash>
+      <Warning>
+        Lembre-se, está é a última vez que terá acesso a essa chave, salve-a em
+        um lugar seguro antes de prosseguir.
+      </Warning>
+    </Label>
+    <ActionsContainer>
+      <Button to="/dashboard">Prosseguir</Button>
+    </ActionsContainer>
+  </LoginContainer>
+)
+
 const Cadastro = (): ReactElement => {
+  const [cadastrado, setCadastrado] = useState<boolean>(false)
+
   return (
     <ContainerSections>
       <SectionGradient>
-        <LoginContainer>
-          <Label>
-            Cadastre seu time
-            <Input type="text"></Input>
-            <SignIn>
-              Já tem cadastro? <Link to="/login">faça o login</Link>
-            </SignIn>
-          </Label>
-          <ActionsContainer>
-            <Button to="/">Cadastrar</Button>
-          </ActionsContainer>
-        </LoginContainer>
+        {cadastrado ? (
+          <ComponenteChaveDeAcesso />
+        ) : (
+          <ComponenteCadastro onCadastrado={setCadastrado} />
+        )}
       </SectionGradient>
     </ContainerSections>
   )
