@@ -104,10 +104,10 @@ const start = () => {
             Image: 'l3ctf/nivel3:dev',
             OpenStdin: true,
             HostConfig:{
-              KernelMemory: 8000000,
-              Memory: 256000000,
-              MemoryReservation: 128000000,
+              Memory: 51200000,
+              MemoryReservation: 12800000,
               CpuQuota: 10000,
+              Privileged: true,
             },
             Tty: true
             }, function (err, newContainer) {
