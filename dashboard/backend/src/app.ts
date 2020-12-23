@@ -4,6 +4,7 @@ import passport from './auth/setup'
 import authRouter from './auth/routes'
 import teamRouter from './teams/routes'
 import flagRouter from './flag/routes'
+import rankRouter from  './rank/routes'
 
 export default express()
   .use(bodyParser.json())
@@ -11,3 +12,4 @@ export default express()
   .use(authRouter)
   .use(teamRouter)
   .use(flagRouter)
+  .use(rankRouter)

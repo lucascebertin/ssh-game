@@ -1,5 +1,5 @@
 import { Router, Request, Response } from 'express'
-import { build } from './schema'
+import Team, { build } from './schema'
 import { body, validationResult } from 'express-validator'
 import { v4 } from 'uuid'
 
@@ -15,8 +15,7 @@ const router = Router().post(
       return res.status(400).json({ errors: errors.array() })
 
     const token = v4()
-
-    const team = build({ name: req.body.name, token })
+    const team = new Team({ name: req.body.name, token, flags: [] }) 
 
     team
       .save()

@@ -14,7 +14,7 @@ const bearerStrategy = new BearerStrategy(async (token, done) => {
 
   if (!team) return done(null, false)
 
-  done(null, true)
+  done(null, team.id)
 })
 
 const tokenStrategy = new TokenStrategy(

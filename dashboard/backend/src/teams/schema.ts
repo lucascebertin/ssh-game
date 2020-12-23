@@ -1,5 +1,6 @@
-import mongoose from 'mongoose'
+import mongoose, { Schema } from 'mongoose'
 import { Team } from './team'
+import { FlagFoundModel, schemaFlagFound } from '../flag/schema'
 
 const schema = new mongoose.Schema({
   name: {
@@ -12,10 +13,10 @@ const schema = new mongoose.Schema({
     required: true,
     unique: true,
   },
+  flags: [schemaFlagFound]
 })
 
-const Model = mongoose.model('team', schema)
+const Model = mongoose.model<Team>('team', schema)
 
 export const build = (obj: Team) => new Model(obj)
-
 export default Model
