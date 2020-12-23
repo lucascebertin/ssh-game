@@ -7,5 +7,5 @@ export interface Flag extends Document<Schema.Types.ObjectId> {
 
 export interface FlagFound extends Document<Schema.Types.ObjectId> {
   flag: Flag
-  when?: Date
+  when: number
 }
