@@ -1,0 +1,13 @@
+FROM node:12-alpine
+
+RUN apk update && apk upgrade
+
+WORKDIR /app
+
+COPY ./package.json ./package-lock.json ./tsconfig.json ./index.d.ts ./
+
+RUN npm install
+
+COPY . .
+
+ENTRYPOINT ["npm", "run", "migrate:up"]

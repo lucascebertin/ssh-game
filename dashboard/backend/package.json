@@ -6,7 +6,8 @@
   "scripts": {
     "build": "tsc",
     "dev": "nodemon --watch 'src/' --exec 'ts-node src/index.ts' -e ts",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "migrate:up": "migrate-mongo up"
   },
   "keywords": [],
   "author": "",
@@ -27,6 +28,7 @@
     "express": "^4.17.1",
     "express-validator": "^6.8.0",
     "jsonwebtoken": "^8.5.1",
+    "migrate-mongo": "^8.1.4",
     "mongoose": "^5.11.8",
     "passport": "^0.4.1",
     "passport-http-bearer": "^1.0.1",

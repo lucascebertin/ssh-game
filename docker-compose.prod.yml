@@ -50,3 +50,67 @@ services:
     image: l3ctf/dashboard:dev
     ports:
       - '1337:80'
+
+
+  mongodb:
+    image: bitnami/mongodb:4.2.11
+    ports:
+      - 27017:27017
+    environment:
+      MONGODB_USERNAME: l3ctf
+      MONGODB_PASSWORD: sup3rdup3rp4ssw0rd
+      MONGODB_ROOT_PASSWORD: sup3rdup3rp4ssw0rdf0rw00t
+      MONGODB_DATABASE: l3ctf
+      MONGODB_PORT_NUMBER: 27017
+
+  mongo-express:
+    image: mongo-express:0.54.0
+    ports:
+      - 8081:8081
+    environment:
+      ME_CONFIG_MONGODB_ADMINUSERNAME: root
+      ME_CONFIG_MONGODB_ADMINPASSWORD: sup3rdup3rp4ssw0rdf0rw00t
+      ME_CONFIG_MONGODB_SERVER: mongodb
+      ME_CONFIG_BASICAUTH_USERNAME: hacked
+      ME_CONFIG_BASICAUTH_PASSWORD: sup3rdup3r
+
+  api:
+    build:
+      context: ./dashboard/backend
+      dockerfile: Dockerfile
+    image: l3ctf/api:dev
+    ports:
+      - '31337:4000'
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 256M
+        reservations:
+          cpus: '0.2'
+          memory: 128M
+    depends_on:
+      - mongodb 
+    environment:
+      PORT: 4000
+      DB_NAME: l3ctf
+      DB_HOST: mongodb
+      DB_PORT: 27017
+      DB_USERNAME: l3ctf
+      DB_PASSWORD: sup3rdup3rp4ssw0rd
+
+  migrations:
+    build:
+      context: ./dashboard/backend
+      dockerfile: Dockerfile.migrations
+    image: l3ctf/api-migrations:dev
+    depends_on:
+      - mongodb 
+    environment:
+      DB_NAME: l3ctf
+      DB_HOST: mongodb
+      DB_PORT: 27017
+      DB_USERNAME: l3ctf
+      DB_PASSWORD: sup3rdup3rp4ssw0rd
+
+
