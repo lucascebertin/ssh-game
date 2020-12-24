@@ -1,10 +1,12 @@
-import React, { ReactElement } from 'react'
+import React, { Fragment, ReactElement, useEffect, useState } from 'react'
 import ContainerSections from '../../componentes/Container/Sections'
 import styled from 'styled-components/macro'
 import Label from '../../componentes/Label'
 import Input from '../../componentes/Input'
 import ActionsContainer from '../../componentes/Container/Action'
 import Button from '../../componentes/Button'
+import { Rank } from './rank'
+import { obterRanking, enviarFlag } from './service'
 
 const TeamSectionDashboardTitle = styled.div`
   color: springgreen;
@@ -80,6 +82,28 @@ const TeamScore = styled.div`
 const SubmitFlag = styled.div``
 
 const Dashboard = (): ReactElement => {
+  const [ranking, setRanking] = useState<Rank[]>([])
+  const [flag, setFlag] = useState<string>('')
+  const atualizarRanking = () => obterRanking().then(setRanking)
+
+  const clickHandler = () => {
+    enviarFlag(flag)
+      .then(() => alert('gratz'))
+      .catch(() => alert('w0opz'))
+      .finally(() => {
+        setFlag('')
+        atualizarRanking()
+      })
+  }
+
+  useEffect(() => {
+    atualizarRanking()
+    const interval = setInterval(() => {
+      atualizarRanking()
+    }, 5000)
+    return () => clearInterval(interval)
+  }, [])
+
   return (
     <ContainerSections>
       <TeamSectionDashboardTitle>Dashboard</TeamSectionDashboardTitle>
@@ -89,25 +113,27 @@ const Dashboard = (): ReactElement => {
           <RankingTable>
             <RankingName>Time</RankingName>
             <RankingScore>Pontos</RankingScore>
-            <TeamName>Time Olha a pedra!</TeamName>
-            <TeamScore>10</TeamScore>
-            <TeamName>Time Olha a pedra!</TeamName>
-            <TeamScore>10</TeamScore>
-            <TeamName>Time Olha a pedra!</TeamName>
-            <TeamScore>10</TeamScore>
-            <TeamName>Time Olha a pedra!</TeamName>
-            <TeamScore>10</TeamScore>
-            <TeamName>Time Olha a pedra!</TeamName>
-            <TeamScore>10</TeamScore>
+            {ranking.map((rank) => (
+              <Fragment key={rank.team}>
+                <TeamName>{rank.team}</TeamName>
+                <TeamScore>{rank.points}</TeamScore>
+              </Fragment>
+            ))}
           </RankingTable>
         </RankingGraph>
         <SubmitFlag>
           <Label>
             Envie flag encontrada
-            <Input />
+            <Input
+              type="text"
+              value={flag}
+              onChange={(event) => setFlag(event.target.value)}
+            />
           </Label>
           <ActionsContainer>
-            <Button to="/">Enviar</Button>
+            <Button to="#" onClick={clickHandler}>
+              Enviar
+            </Button>
           </ActionsContainer>
         </SubmitFlag>
       </TeamSection>

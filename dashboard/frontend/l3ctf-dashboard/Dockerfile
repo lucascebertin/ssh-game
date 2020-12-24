@@ -6,6 +6,9 @@ COPY package-lock.json ./
 RUN npm ci --silent
 RUN npm install react-scripts@3.4.1 -g --silent
 COPY . ./
+
+RUN sed -i "s|%API_PORT%|31337|g" /app/public/config.js.template
+RUN rm /app/public/config.js && mv /app/public/config.js.template /app/public/config.js
 RUN npm run build
 
 # production environment
