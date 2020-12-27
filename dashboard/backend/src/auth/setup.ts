@@ -17,7 +17,7 @@ const bearerStrategy = new BearerStrategy(async (token, done) => {
 
     done(null, team.id)
   } catch (error) {
-    done(error, false)
+    done(null, false)
   }
 })
 
@@ -33,7 +33,7 @@ const tokenStrategy = new TokenStrategy(
 
       done(null, signedToken)
     } catch (error) {
-      done(error, false)
+      done(null, false)
     }
   },
 )

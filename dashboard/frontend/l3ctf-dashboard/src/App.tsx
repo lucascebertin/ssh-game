@@ -1,10 +1,11 @@
 import React, { ReactElement, useState } from 'react'
 import styled from 'styled-components'
 import Home from './template/Home'
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
+import { Router, Switch, Route } from 'react-router-dom'
 import Login from './template/Login'
 import Dashboard from './dominio/Dashboard'
 import Modal, { ModalProps, Nivel } from './componentes/Modal'
+import history from './infrastructure/history'
 
 const AppContainer = styled.section`
   width: 100%;
@@ -23,7 +24,7 @@ const App = (): ReactElement => {
 
   return (
     <AppContainer>
-      <Router>
+      <Router history={history}>
         <Switch>
           <Route path="/login">
             <Login handleModal={abrirHandler} />

@@ -132,12 +132,13 @@ const Dashboard = ({ handleModal }: DashboardProps): ReactElement => {
           <RankingTable>
             <RankingName>Time</RankingName>
             <RankingScore>Pontos</RankingScore>
-            {ranking.map((rank) => (
-              <Fragment key={rank.team}>
-                <TeamName>{rank.team}</TeamName>
-                <TeamScore>{rank.points}</TeamScore>
-              </Fragment>
-            ))}
+            {ranking &&
+              ranking.map((rank) => (
+                <Fragment key={rank.team}>
+                  <TeamName>{rank.team}</TeamName>
+                  <TeamScore>{rank.points}</TeamScore>
+                </Fragment>
+              ))}
           </RankingTable>
         </RankingGraph>
         <SubmitFlag>

@@ -10,7 +10,9 @@ export function obterRanking(): Promise<Rank[]> {
     headers: { Authorization: `Bearer ${token}` },
   }
 
-  return axios.get<Rank[]>(url, axiosConfig).then((response) => response.data)
+  return axios
+    .get<Rank[]>(url, axiosConfig)
+    .then((response) => response && response.data)
 }
 
 export function enviarFlag(flag: string): Promise<boolean> {
