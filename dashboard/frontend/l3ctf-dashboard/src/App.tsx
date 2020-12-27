@@ -1,30 +1,44 @@
-import React, { ReactElement } from 'react'
+import React, { ReactElement, useState } from 'react'
 import styled from 'styled-components'
-import { theme } from './styles/main'
+import Home from './template/Home'
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
+import Login from './template/Login'
+import Dashboard from './dominio/Dashboard'
+import Modal, { ModalProps, Nivel } from './componentes/Modal'
 
 const AppContainer = styled.section`
-    width: 100%;
-`
-
-const LoginContainer = styled.div`
-    display: flex;
-    justify-content: center;
-`
-
-const CtfTitle = styled.h1`
-    color: ${theme.colors.green};
-    font-family: 'Josefin Sans';
-    font-size: 3rem;
+  width: 100%;
+  display: flex;
+  justify-content: center;
 `
 
 const App = (): ReactElement => {
-    return (
-        <AppContainer>
-            <LoginContainer>
-                <CtfTitle>L3CTF</CtfTitle>
-            </LoginContainer>
-        </AppContainer>
-    )
+  const [abrir, setAbrir] = useState<boolean>(false)
+  const [props, setProps] = useState<ModalProps>()
+
+  const abrirHandler = (titulo: string, texto: string, nivel: Nivel) => {
+    setProps({ titulo, texto, nivel })
+    setAbrir(true)
+  }
+
+  return (
+    <AppContainer>
+      <Router>
+        <Switch>
+          <Route path="/login">
+            <Login handleModal={abrirHandler} />
+          </Route>
+          <Route path="/dashboard">
+            <Dashboard handleModal={abrirHandler} />
+          </Route>
+          <Route path="/">
+            <Home handleModal={abrirHandler} />
+          </Route>
+        </Switch>
+      </Router>
+      {abrir && <Modal {...props} onClose={() => setAbrir(false)} />}
+    </AppContainer>
+  )
 }
 
 export default App
