@@ -8,6 +8,8 @@ import Label from '../../componentes/Label'
 import Input from '../../componentes/Input'
 import { login } from './service'
 import { useHistory } from 'react-router-dom'
+import { DashboardProps } from '../Dashboard'
+import { Nivel } from '../../componentes/Modal'
 
 const LoginSection = styled.section`
   width: 100%;
@@ -25,15 +27,19 @@ const LoginSectionGradient = styled(LoginSection)`
   border-image-source: linear-gradient(to left, #9b58b6, springgreen);
 `
 
-const Login = (): ReactElement => {
+const Login = ({ handleModal }: DashboardProps): ReactElement => {
   const [text, setText] = useState('')
   const history = useHistory()
 
   const clickHandler = () => {
-    login(text).then((bearer) => {
-      localStorage.setItem('token', bearer)
-      history.push('/dashboard')
-    })
+    login(text)
+      .then((bearer) => {
+        localStorage.setItem('token', bearer)
+        history.push('/dashboard')
+      })
+      .catch(() => {
+        handleModal('w0opZ', 'Token incorreto...', Nivel.erro)
+      })
   }
 
   return (

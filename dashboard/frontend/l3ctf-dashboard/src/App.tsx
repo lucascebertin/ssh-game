@@ -1,9 +1,10 @@
-import React, { ReactElement } from 'react'
+import React, { ReactElement, useState } from 'react'
 import styled from 'styled-components'
 import Home from './template/Home'
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 import Login from './template/Login'
 import Dashboard from './dominio/Dashboard'
+import Modal, { ModalProps, Nivel } from './componentes/Modal'
 
 const AppContainer = styled.section`
   width: 100%;
@@ -12,21 +13,30 @@ const AppContainer = styled.section`
 `
 
 const App = (): ReactElement => {
+  const [abrir, setAbrir] = useState<boolean>(false)
+  const [props, setProps] = useState<ModalProps>()
+
+  const abrirHandler = (titulo: string, texto: string, nivel: Nivel) => {
+    setProps({ titulo, texto, nivel })
+    setAbrir(true)
+  }
+
   return (
     <AppContainer>
       <Router>
         <Switch>
           <Route path="/login">
-            <Login />
+            <Login handleModal={abrirHandler} />
           </Route>
           <Route path="/dashboard">
-            <Dashboard />
+            <Dashboard handleModal={abrirHandler} />
           </Route>
           <Route path="/">
-            <Home />
+            <Home handleModal={abrirHandler} />
           </Route>
         </Switch>
       </Router>
+      {abrir && <Modal {...props} onClose={() => setAbrir(false)} />}
     </AppContainer>
   )
 }

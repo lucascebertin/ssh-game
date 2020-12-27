@@ -12,6 +12,8 @@ import Link from '../../componentes/Link'
 import { cadastrar } from './service'
 import { useHistory } from 'react-router-dom'
 import { login } from '../Login/service'
+import { DashboardProps } from '../Dashboard'
+import { Nivel } from '../../componentes/Modal'
 
 const SignIn = styled.div`
   margin-top: 0.5rem;
@@ -33,7 +35,9 @@ const Warning = styled.div`
 const ComponenteCadastro = ({ onCadastrado }): ReactElement => {
   const [itemInput, setItemInput] = useState('')
   const cadastrarTime = () => {
-    cadastrar(itemInput).then((token) => onCadastrado(token))
+    cadastrar(itemInput)
+      .then((token) => onCadastrado(false, token))
+      .catch(() => onCadastrado(true))
   }
 
   return (
@@ -87,11 +91,20 @@ const ComponenteChaveDeAcesso = ({ token }): ReactElement => {
   )
 }
 
-const Cadastro = (): ReactElement => {
+const Cadastro = ({ handleModal }: DashboardProps): ReactElement => {
   const [cadastrado, setCadastrado] = useState<boolean>(false)
   const [token, setToken] = useState<string>('')
 
-  const cadastroHandler = (tokenCadastro: string): void => {
+  const cadastroHandler = (erro: boolean, tokenCadastro: string): void => {
+    if (erro) {
+      setCadastrado(false)
+      return handleModal(
+        'w0opZ',
+        'Já existe um time com este nome...',
+        Nivel.erro,
+      )
+    }
+
     setToken(tokenCadastro)
     setCadastrado(true)
   }

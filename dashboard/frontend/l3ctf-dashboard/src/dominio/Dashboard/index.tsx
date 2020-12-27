@@ -7,6 +7,7 @@ import ActionsContainer from '../../componentes/Container/Action'
 import Button from '../../componentes/Button'
 import { Rank } from './rank'
 import { obterRanking, enviarFlag } from './service'
+import { Nivel } from '../../componentes/Modal'
 
 const TeamSectionDashboardTitle = styled.div`
   color: springgreen;
@@ -80,16 +81,34 @@ const TeamScore = styled.div`
 `
 
 const SubmitFlag = styled.div``
+export type DashboardProps = {
+  handleModal: (titulo: string, texto: string, nivel: Nivel) => void
+}
 
-const Dashboard = (): ReactElement => {
+const Dashboard = ({ handleModal }: DashboardProps): ReactElement => {
   const [ranking, setRanking] = useState<Rank[]>([])
   const [flag, setFlag] = useState<string>('')
   const atualizarRanking = () => obterRanking().then(setRanking)
 
   const clickHandler = () => {
     enviarFlag(flag)
-      .then(() => alert('gratz'))
-      .catch(() => alert('w0opz'))
+      .then((sucesso) => {
+        if (!sucesso)
+          return handleModal(
+            'w0opZ',
+            'Oh, e agora, quem poderá nos ajudar!?',
+            Nivel.erro,
+          )
+
+        handleModal('w0ot', 'Parabéns por encontrar a flag!', Nivel.sucesso)
+      })
+      .catch(() => {
+        handleModal(
+          'w0opZ',
+          'Oh, e agora, quem poderá nos ajudar!?',
+          Nivel.erro,
+        )
+      })
       .finally(() => {
         setFlag('')
         atualizarRanking()
