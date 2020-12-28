@@ -25,6 +25,6 @@ export function enviarFlag(flag: string): Promise<boolean> {
 
   return axios
     .post<Flag>(url, data, axiosConfig)
-    .then(() => true)
+    .then((response) => response && response.status === 200)
     .catch(() => false)
 }
