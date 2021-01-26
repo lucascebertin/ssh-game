@@ -76,6 +76,12 @@ Para rodar estes desafios, será necessário ter ngrok instalado e, após isto, 
 Portas altas foram usadas para não ser necessário qualquer privilégio administrativo enquanto desenvolvimento.
 A experiência completa se baseia em parecer com um roteador de verdade, portanto, é necessário utilizar portas que sejam também usadas por tal.
 
+### Usando Windows?
+Algumas adaptações devem ser feitas para que o desafio seja bem sucedido:
+- Ao colar a chave SSH no Notepad ou Visual Studio Code, quebre uma linha no fim do arquivo
+- Ao salvar a chave, nomeie-a sem extensão ou extensões .txt ou .ppk
+- Não use Putty como cliente SSH. Prefira o cliente SSH incluído no Windows 10 (Fall Creators Update ou mais recente), a partir do comando `ssh`
+
 
 ## ** SOLUÇÕES - ESTE ESPAÇO É PARA SPOILERS DO GAME, NÃO ABRA CASO QUEIRA JOGAR DE VERDADE **
 <details><summary>TUDO BEM, ME MOSTRA LOGO COMO RESOLVE ESSA COISA TODA!</summary>
