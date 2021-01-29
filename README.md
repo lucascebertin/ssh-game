@@ -114,7 +114,7 @@ Uma das possíveis soluções é, criar um arquivo `log.sh`, na home do temp_use
 Qualquer uma destas soluções habilita a leitura do arquivo /root/flag
 O arquivo log.sh pode ser descoberto através de um cat em /etc/crontab
 
-FLAG: L3CTF{y34h_y34h_g0t_th3_k3ys_n0t_th3_ch33s3_th3_k3ys}
+FLAG: L3CTF{4r3_y0u_t3ll1ng_m3_y0u_h4ck3d_4_t1m3_m4ch1n3}
 
 </p>
 </details>
